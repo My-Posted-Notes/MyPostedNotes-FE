@@ -24,4 +24,4 @@ export {
     getNote,
     editNote,
     deleteNote
-} from './notesActions';
+} from './rootActions';

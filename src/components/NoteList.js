@@ -7,9 +7,9 @@ const NoteList =(props) =>{
             {/* <h1>Your Notes:</h1> */}
             <div className="note-cards-container">               
                 {props.noteList.map(note => (
-                    <div className="note-card-container">
+                    <div key={note.id} className="note-card-container">
                         <i id="pin"></i>
-                        <div className="note-card" key={note.id}
+                        <div className="note-card"
                             onClick={() => props.history.push(`/note/${note.id}`)}>
                             
                             <h2 className="mdhtmlform-html note-title"

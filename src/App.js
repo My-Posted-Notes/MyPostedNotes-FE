@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Route, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import './App.css';
 import NoteListView from './views/NoteListView';
 import NoteView from './views/NoteView';
@@ -36,6 +37,12 @@ webAuth.parseHash((err, authResult) => {
 });
 
 class App extends Component {
+
+        // componentWillMount(){
+        //         if(localStorage.getItem('email') && !this.props.currentUser){
+        //           this.props.checkEmail();
+        //         }
+        // }
         isAuthenticated() {
                 // Check whether the current time is past the
                 // Access Token's expiry time
@@ -97,5 +104,19 @@ class App extends Component {
         }        
 }
 
+const mapStateToProps = state => {
+        state = state.rootReducer; // pull values from state root reducer
+        return {
+            //state items
+        //     currentUser: state.currentUser
+        }
+      }
+      
+export default withRouter(connect(mapStateToProps, {
+        // actions
+        // getCurrentUser,
+        // checkEmail,
+})(App));
 
-export default withRouter(App);
+
+// export default withRouter(App);
