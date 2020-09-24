@@ -15,7 +15,7 @@ class Note extends React.Component {
     deleteModal = document.getElementsByClassName('delete-modal');
 
     render() { 
-        console.log(this.props.currentNote)
+        // console.log(this.props.currentNote)
         return (
             <div className="note-container">
                 <div className="edit-delete-links">

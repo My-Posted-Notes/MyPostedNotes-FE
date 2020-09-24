@@ -72,7 +72,7 @@ class App extends Component {
                     <h1>My Posted Notes</h1><br></br>
                     <div className="nav-botton-container">
                             <button className="navigation-button" onClick={() => this.props.history.push("/")} >
-                                    View Your Notes</button>
+                                    View All Notes</button>
                             <button className="navigation-button" onClick={() => this.props.history.push("/create-note")}>
                                     + Create New Notes</button>
                             <button className="navigation-button" onClick={()=> this.logout()}>Log Out</button>

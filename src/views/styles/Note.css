@@ -173,7 +173,7 @@
 }
 
 #pin:after {
-      background-color: #A31;  
+      background-color: rgb(250, 2, 2);  
       /* eslint-disable-next-line */
       background-image: radial-gradient(25% 25%, circle, hsla(0,0%,100%,.3), hsla(0,0%,0%,.3));
       border-radius: 50%;
