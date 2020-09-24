@@ -1,17 +1,18 @@
 import  React from 'react';
 import './styles/Note.css';
+// import '../../public/mdhtmlform';
 
-const CreateNoteView = props =>{
+const EditNoteView = props =>{
+
     return (
         <div className="create-edit-form">
-            <h1>Create New Note:</h1>
+            <h1>Edit Note:</h1>
             <br></br>
             <textarea  type="text"
                     className="mdhtmlform-md title-input"
                     data-mdhtmlform-group="0"
                     name="title"
                     value={props.note.title}
-                    placeholder="Note Title"
                     onChange={props.handleInput}/>
             <br></br>
             <textarea  type="text"
@@ -19,14 +20,15 @@ const CreateNoteView = props =>{
                     data-mdhtmlform-group="1"
                     name="content"
                     value={props.note.content}
-                    placeholder="Note Content"
                     onChange={props.handleInput}/>
             <br></br>
             <button className="save-input-button"
-                    onClick={props.handleAddNewNote}>Save</button>  
+                    onClick={
+                            props.handleEditNote
+                        }>Save</button>
         </div>
       
     )
 }
 
-export default CreateNoteView;
+export default EditNoteView;

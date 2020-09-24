@@ -1,34 +1,47 @@
-import  React from 'react';
-import './Note.css';
-// import '../../public/mdhtmlform';
+import React from 'react';
+import {connect} from 'react-redux';
+import EditNoteView from '../views/EditNoteView';
+import {editNote}  from '../store/actions';
 
-const EditNote = props =>{
+class EditNote extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={
+            note:{ ...this.props.currentNote}
+        }
+    }
 
-    return (
-        <div className="create-edit-form">
-            <h1>Edit Note:</h1>
-            <br></br>
-            <textarea  type="text"
-                    className="mdhtmlform-md title-input"
-                    data-mdhtmlform-group="0"
-                    name="title"
-                    value={props.note.title}
-                    onChange={props.handleInput}/>
-            <br></br>
-            <textarea  type="text"
-                    className="mdhtmlform-md textBody-input"
-                    data-mdhtmlform-group="1"
-                    name="content"
-                    value={props.note.content}
-                    onChange={props.handleInput}/>
-            <br></br>
-            <button className="save-input-button"
-                    onClick={
-                            props.handleEditNote
-                        }>Save</button>
-        </div>
-      
-    )
+    handleInput = event =>{
+        event.preventDefault();
+        this.setState({ ...this.state,
+                        note:{...this.state.note, [event.target.name]: event.target.value}});
+    }
+
+    handleEditNote = event => {
+        event.preventDefault();
+        this.props.editNote(this.state.note);
+        this.props.history.push("/");
+    }
+
+    render(){
+        return (
+            <div className="create-view-container">
+                <EditNoteView {...this.props}
+                            note={this.state.note}
+                            handleInput={this.handleInput}
+                            handleEditNote={this.handleEditNote} />
+
+            </div>
+    )}      
 }
 
-export default EditNote;
+const mapStateToProps = state => {
+    state = state.rootReducer; // pull values from state root reducer
+    return {
+        currentNote: state.note
+    }
+};
+
+export default connect( mapStateToProps,
+                        {editNote
+                        })(EditNote);

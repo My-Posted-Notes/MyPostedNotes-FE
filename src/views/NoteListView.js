@@ -1,43 +1,34 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import  React from 'react';
+import './styles/Note.css';
 
-import { getNoteList } from '../store/actions';
+const NoteListView =(props) =>{
+    console.log(props.noteList);
 
-import NoteList from '../components/NoteList.js';
-
-class NoteListView extends React.Component {
-    constructor(props){
-        super(props);
-        this.state={
-            notesList: this.props.noteList,
-            actionTookPlace: this.props.actionTookPlace
-        }
-    }
-
-    componentDidMount() {    
-        this.props.getNoteList();
-    }
-
-    handleActionTookPlace(){
-        if (this.props.actionTookPlace !== this.state.actionTookPlace) {
-            this.props.getNoteList();
-        }
-    }
-
-    render() { 
-        return ( 
-            <div className="notelist-view-container"
-                 >  
-                 {this.handleActionTookPlace()}      
-                <NoteList {...this.props}/>
-            </div>     
-        );
-    }
+    return (
+        <div className="notelist-wrapper">                      
+            {/* <h1>Your Notes:</h1> */}
+            <div className="note-cards-container">               
+                {props.noteList.map(note => (
+                    
+                    <div key={note.id} className="note-card-container">
+                        <i id="pin"></i>
+                        <div className="note-card"
+                            onClick={(e)=>props.handleNoteClick(e, note)}
+                            >
+                            
+                            <h2 className="mdhtmlform-html note-title"
+                            data-mdhtml-group="0">{note.title}</h2>
+                            <hr></hr>
+                            <p className="mdhtmlform-html note-textBody"
+                            data-mdhtml-group="1">{note.content}</p>
+                        </div>
+                    </div>   
+ 
+                    
+                ))}
+            </div>
+        </div>
+    )
 }
 
-const mapStateToProps = state => ({
-    noteList: state.notes,
-    actionTookPlace: state.actionTookPlace
-});
-
-export default connect(mapStateToProps, { getNoteList })(NoteListView);
+export default NoteListView;

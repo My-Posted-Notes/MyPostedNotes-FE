@@ -20,9 +20,9 @@ export const NOTES_FETCH_COMPLETE = 'NOTES_FETCH_COMPLETE';
 export const NOTES_FETCH_FAILURE = 'NOTES_FETCH_FAILURE';
 
 // NOTE - ADD NOTE
-export const ADD_NOTE_START = 'ADD_NOTE_START';
-export const ADD_NOTE_COMPLETE = 'ADD_NOTE_COMPLETE';
-export const ADD_NOTE_FAILURE = 'ADD_NOTE_FAILURE';
+export const NOTE_ADD_START = 'NOTE_ADD_START';
+export const NOTE_ADD_COMPLETE = 'NOTE_ADD_COMPLETE';
+export const NOTE_ADD_FAILURE = 'NOTE_ADD_FAILURE';
 
 // NOTE - GET NOTE
 export const NOTE_GET_START = 'NOTE_GET_START';
@@ -35,15 +35,15 @@ export const NOTE_EDIT_COMPLETE = 'NOTE_EDIT_COMPLETE';
 export const NOTE_EDIT_FAILURE = 'NOTE_EDIT_FAILURE';
 
 //NOTE - DELETE NOTE
-export const DELETE_NOTE_START = 'DELETE_NOTE_START';
-export const DELETE_NOTE_COMPLETE = 'DELETE_NOTE_COMPLETE';
-export const DELETE_NOTE_FAILURE = 'DELETE_NOTE_FAILURE';
+export const NOTE_DELETE_START = 'NOTE_DELETE_START';
+export const NOTE_DELETE_COMPLETE = 'NOTE_DELETE_COMPLETE';
+export const NOTE_DELETE_FAILURE = 'NOTE_DELETE_FAILURE';
 
 
 export const getNoteList = () => dispatch => {
     dispatch({ type: NOTES_FETCH_START });
-    console.log(process.env.REACT_APP_BACKEND_URL);
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/note`)
+    // console.log(process.env.REACT_APP_BACKEND_URL);
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/note/`)
         .then(response => {
             dispatch({ type: NOTES_FETCH_COMPLETE, payload: response.data });
         })
@@ -53,13 +53,13 @@ export const getNoteList = () => dispatch => {
 };
 
 export const addNewNote = (note) => dispatch => {
-    dispatch({ type: ADD_NOTE_START });
+    dispatch({ type: NOTE_ADD_START });
 
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/note`, note)
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/note/`, note)
         .then(response => {
-            dispatch({ type: ADD_NOTE_COMPLETE, payload: response.data });
+            dispatch({ type: NOTE_ADD_COMPLETE, payload: response.data });
         }).catch(err => {
-            dispatch({ type: ADD_NOTE_FAILURE, payload: err });
+            dispatch({ type: NOTE_ADD_FAILURE, payload: err });
         });
 }
 
@@ -92,13 +92,13 @@ export const editNote = (note) => dispatch => {
 };
 
 export const deleteNote = (id) => dispatch => {
-    dispatch({ type: DELETE_NOTE_START });
+    dispatch({ type: NOTE_DELETE_START });
     const promise = axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/note/${id}`);
     promise
         .then(response => {
-            dispatch({ type: DELETE_NOTE_COMPLETE  });
+            dispatch({ type: NOTE_DELETE_COMPLETE  });
         })
         .catch(err => {
-            dispatch({ type: DELETE_NOTE_FAILURE, payload: err });
+            dispatch({ type: NOTE_DELETE_FAILURE, payload: err });
         });
 };

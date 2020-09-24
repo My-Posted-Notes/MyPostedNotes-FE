@@ -1,32 +1,52 @@
-import  React from 'react';
-import './Note.css';
+import React from 'react';
+import {connect} from 'react-redux';
+import CreateNote from '../components/CreateNote';
+import { addNewNote } from '../store/actions';
 
-const CreateNote = props =>{
-    return (
-        <div className="create-edit-form">
-            <h1>Create New Note:</h1>
-            <br></br>
-            <textarea  type="text"
-                    className="mdhtmlform-md title-input"
-                    data-mdhtmlform-group="0"
-                    name="title"
-                    value={props.note.title}
-                    placeholder="Note Title"
-                    onChange={props.handleInput}/>
-            <br></br>
-            <textarea  type="text"
-                    className="mdhtmlform-md textBody-input"
-                    data-mdhtmlform-group="1"
-                    name="content"
-                    value={props.note.content}
-                    placeholder="Note Content"
-                    onChange={props.handleInput}/>
-            <br></br>
-            <button className="save-input-button"
-                    onClick={props.handleAddNewNote}>Save</button>  
-        </div>
-      
-    )
+class CreateNoteView extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={
+            note:{
+                title: "",
+                content: "",
+                user_id: 1, //To do:  need to fetch user id and save in redux state then pull from it
+            }
+            // isUpdate: false
+        }
+    }
+
+    handleInput = event =>{
+        this.setState({ ...this.state,
+                        note:{...this.state.note, [event.target.name]: event.target.value}});
+    }
+
+    handleAddNewNote = event => {
+        event.preventDefault();
+        console.log("add note props: ",this.props);
+        this.props.addNewNote(this.state.note);
+        this.props.history.push("/");
+    }
+
+    render(){
+        return (
+            <div className="create-view-container">
+                <CreateNote {...this.props}
+                            note={this.state.note}
+                            isUpdate={this.state.isUpdate}
+                            handleInput={this.handleInput}
+                            handleAddNewNote={this.handleAddNewNote}
+                            />  
+            </div>
+    )}      
 }
 
-export default CreateNote;
+const mapStateToProps = state => {
+    state = state.rootReducer; // pull values from state root reducer
+    return {
+        
+    }
+};
+
+export default connect( mapStateToProps,
+                        {addNewNote})(CreateNoteView);

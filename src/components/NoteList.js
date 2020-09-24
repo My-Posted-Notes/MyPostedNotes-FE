@@ -1,30 +1,59 @@
-import  React from 'react';
-import './Note.css';
+import React from 'react';
+import { connect } from 'react-redux';
 
-const NoteList =(props) =>{
-    return (
-        <div className="notelist-wrapper">                      
-            {/* <h1>Your Notes:</h1> */}
-            <div className="note-cards-container">               
-                {props.noteList.map(note => (
-                    <div key={note.id} className="note-card-container">
-                        <i id="pin"></i>
-                        <div className="note-card"
-                            onClick={() => props.history.push(`/note/${note.id}`)}>
-                            
-                            <h2 className="mdhtmlform-html note-title"
-                            data-mdhtml-group="0">{note.title}</h2>
-                            <hr></hr>
-                            <p className="mdhtmlform-html note-textBody"
-                            data-mdhtml-group="1">{note.content}</p>
-                        </div>
-                    </div>   
- 
-                    
-                ))}
-            </div>
-        </div>
-    )
+import { getNoteList } from '../store/actions';
+
+import NoteListView from '../views/NoteListView.js';
+
+class NoteList extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={
+            noteList: this.props.noteList
+            // actionTookPlace: false
+        }
+    }
+
+    componentDidMount() {    
+        this.props.getNoteList();   
+    }
+
+    handleNoteClick = (e, note) =>{
+        e.preventDefault();
+        window.location.href = `/note/${note.id}`
+        // this.props.history.push(`/note/${note.id}`);
+        // this.props.currentNote=note;
+    }
+
+    // handleActionTookPlace(){
+    //     console.log("props.actionTookPlace:", this.props.actionTookPlace);  
+    //     if (this.props.actionTookPlace !== this.state.actionTookPlace) {
+    //         this.props.getNoteList();
+    //     }
+    // }
+
+    render() { 
+        return ( 
+            <div className="notelist-view-container"
+                 >  
+                 {/* {this.handleActionTookPlace()}       */}
+                <NoteListView {...this.props}
+                            handleNoteClick={this.handleNoteClick}/>
+            </div>     
+        );
+    }
 }
 
-export default NoteList;
+const mapStateToProps = state => {
+    state = state.rootReducer; // pull values from state root reducer
+    return {
+        //state items
+        noteList: state.noteList,
+        currentNote: state.note
+    }
+};
+
+export default connect(mapStateToProps, { 
+    getNoteList,
+    // getNote
+})(NoteList);

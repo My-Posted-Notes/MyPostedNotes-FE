@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './views/styles/Index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -19,7 +19,7 @@ import 'bootstrap-css-only';
 import 'mdbreact/dist/css/mdb.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { noteReducer } from './store/reducers';
+import rootReducer from './store/reducers';
 
 // Redux dev tools
 const composeEnhancers =
@@ -36,7 +36,7 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 
-const store = createStore(noteReducer, enhancer);
+const store = createStore(rootReducer, enhancer);
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
